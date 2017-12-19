@@ -1,5 +1,6 @@
 package com.example.uddishverma.quiz_app.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,9 +18,11 @@ import android.view.MenuItem;
 import com.example.uddishverma.quiz_app.R;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     CardView levelOne, levelTwo, levelThree, levelFour, levelFive;
+    String levelSelected;
+    Intent i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,16 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        i = new Intent(MainActivity.this, QuestionActivity.class);
+
+        //Handling click listeners on the card views
+        levelOne.setOnClickListener(this);
+        levelTwo.setOnClickListener(this);
+        levelThree.setOnClickListener(this);
+        levelFour.setOnClickListener(this);
+        levelFive.setOnClickListener(this);
+
     }
 
     private void initView() {
@@ -104,5 +117,36 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.level_one:
+                levelSelected = "one";
+                i.putExtra("levelSelected", levelSelected);
+                startActivity(i);
+                break;
+            case R.id.level_two:
+                levelSelected = "two";
+                i.putExtra("levelSelected", levelSelected);
+                startActivity(i);
+                break;
+            case R.id.level_three:
+                levelSelected = "three";
+                i.putExtra("levelSelected", levelSelected);
+                startActivity(i);
+                break;
+            case R.id.level_four:
+                levelSelected = "four";
+                i.putExtra("levelSelected", levelSelected);
+                startActivity(i);
+                break;
+            case R.id.level_five:
+                levelSelected = "five";
+                i.putExtra("levelSelected", levelSelected);
+                startActivity(i);
+                break;
+        }
     }
 }

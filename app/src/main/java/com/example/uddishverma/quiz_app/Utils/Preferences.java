@@ -22,8 +22,5 @@ public class Preferences {
     public static void deletePrefs(Context context){
         SharedPreferences sharedpreferences = context.getSharedPreferences("MaitPrefs", Context.MODE_PRIVATE);
         sharedpreferences.edit().clear().apply();
-//        SharedPreferences.Editor editor = sharedpreferences.edit();
-//        editor.clear();
-//        editor.apply();
     }
 }
