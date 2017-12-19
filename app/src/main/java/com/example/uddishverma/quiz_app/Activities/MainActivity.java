@@ -1,5 +1,6 @@
 package com.example.uddishverma.quiz_app.Activities;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +15,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.ProgressBar;
 
 import com.example.uddishverma.quiz_app.R;
 
@@ -23,6 +26,8 @@ public class MainActivity extends AppCompatActivity
     CardView levelOne, levelTwo, levelThree, levelFour, levelFive;
     String levelSelected;
     Intent i;
+    ObjectAnimator mAnimator;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +65,12 @@ public class MainActivity extends AppCompatActivity
         levelThree = findViewById(R.id.level_three);
         levelFour = findViewById(R.id.level_four);
         levelFive = findViewById(R.id.level_five);
+        progressBar = findViewById(R.id.prog_bar);
+
+        mAnimator = ObjectAnimator.ofInt(progressBar, "progress", 50);
+//        mAnimator.setDuration(1000);     //0.5 sec
+//        mAnimator.setInterpolator(new DecelerateInterpolator());
+        mAnimator.start();
     }
 
     @Override

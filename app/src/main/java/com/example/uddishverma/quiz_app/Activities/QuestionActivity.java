@@ -153,7 +153,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                 changeQuestion();
 
             } else {
-                
+
                 new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
                         .setTitleText("Wrong Answer!")
                         .setContentText("Correct Answer : " + questionsObject.getString("correct_answer"))

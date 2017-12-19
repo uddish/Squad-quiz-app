@@ -3,4 +3,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="midnightBlue">#212D72</color>
+    <color name="midnightBlueTrans">#50212D72</color>
+    <color name="white">#ffffff</color>
+    <color name="toryBlue">#3D5392</color>
+    <color name="resolutionBlue">#2B386F</color>
+    <color name="darkBlue">#23283D</color>
 </resources>
