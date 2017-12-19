@@ -255,7 +255,7 @@ public class LevelWiseQuestions {
             "},\n" +
             "{\n" +
             "\"id\": \"2\",\n" +
-            "\"question\": \"Which retired American football quarterback played himself in &#039;Ace Ventura: Pet Detective&#039; and &#039;Little Nicky&#039;?\",\n" +
+            "\"question\": \"Which retired American football quarterback played himself in Ace Ventura: Pet Detective and Little Nicky?\",\n" +
             "\"correct_answer\": \"Dan Marino\",\n" +
             "\"incorrect_answers\": [\n" +
             "\"John Elway\",\n" +
@@ -277,7 +277,7 @@ public class LevelWiseQuestions {
             "},\n" +
             "{\n" +
             "\"id\": \"4\",\n" +
-            "\"question\": \"What is the name of the robot in the 1951 science fiction film classic &#039;The Day the Earth Stood Still&#039;?\",\n" +
+            "\"question\": \"What is the name of the robot in the 1951 science fiction film classic The Day the Earth Stood Still?\",\n" +
             "\"correct_answer\": \"Gort\",\n" +
             "\"incorrect_answers\": [\n" +
             "\"Gort\",\n" +
@@ -288,7 +288,7 @@ public class LevelWiseQuestions {
             "},\n" +
             "{\n" +
             "\"id\": \"5\",\n" +
-            "\"question\": \"This movie contains the quote, &quot;I love the smell of napalm in the morning!&quot;\",\n" +
+            "\"question\": \"This movie contains the quote, I love the smell of napalm in the morning!\",\n" +
             "\"correct_answer\": \"Apocalypse Now\",\n" +
             "\"incorrect_answers\": [\n" +
             "\"Platoon\",\n" +
@@ -299,7 +299,7 @@ public class LevelWiseQuestions {
             "},\n" +
             "{\n" +
             "\"id\": \"6\",\n" +
-            "\"question\": \"What is the name of the dog that played Toto in the 1939 film &quot;The Wizard of Oz&quot;?\",\n" +
+            "\"question\": \"What is the name of the dog that played Toto in the 1939 film The Wizard of Oz?\",\n" +
             "\"correct_answer\": \"Terry\",\n" +
             "\"incorrect_answers\": [\n" +
             "\"Tommy\",\n" +
@@ -310,7 +310,7 @@ public class LevelWiseQuestions {
             "},\n" +
             "{\n" +
             "\"id\": \"7\",\n" +
-            "\"question\": \"Who played Baron Victor Frankestein in the 1957 Hammer horror film &quot;The Curse of Frankenstein&quot;?\",\n" +
+            "\"question\": \"Who played Baron Victor Frankestein in the 1957 Hammer horror film The Curse of Frankenstein?\",\n" +
             "\"correct_answer\": \"Peter Cushing\",\n" +
             "\"incorrect_answers\": [\n" +
             "\"Boris Karloff\",\n" +
@@ -326,13 +326,13 @@ public class LevelWiseQuestions {
             "\"incorrect_answers\": [\n" +
             "\"Luke, I am your father.\",\n" +
             "\"You are wrong. I am your father.\",\n" +
-            "\"The truth is that I am your father\"\n" +
+            "\"The truth is that I am your father\",\n" +
             "\"No. I am your father.\"\n" +
             "]\n" +
             "},\n" +
             "{\n" +
             "\"id\": \"9\",\n" +
-            "\"question\": \"What is the make and model of the tour vehicles in &quot;Jurassic Park&quot;?\",\n" +
+            "\"question\": \"What is the make and model of the tour vehicles in Jurassic Park?\",\n" +
             "\"correct_answer\": \"1992 Ford Explorer XLT\",\n" +
             "\"incorrect_answers\": [\n" +
             "\"1992 Ford Explorer XLT\",\n" +
@@ -343,7 +343,7 @@ public class LevelWiseQuestions {
             "},\n" +
             "{\n" +
             "\"id\": \"10\",\n" +
-            "\"question\": \"In &quot;Jurassic World&quot;, which company purchases InGen and creates Jurassic World?\",\n" +
+            "\"question\": \"In Jurassic World, which company purchases InGen and creates Jurassic World?\",\n" +
             "\"correct_answer\": \"Masrani Global Corporation\",\n" +
             "\"incorrect_answers\": [\n" +
             "\"Biology Synthetics Technologies\",\n" +
@@ -436,7 +436,7 @@ public class LevelWiseQuestions {
             "},\n" +
             "{\n" +
             "\"id\": \"8\",\n" +
-            "\"question\": \"What episode of &quot;Mr. Bean&quot; saw him trying to prevent people from seeing him naked?\",\n" +
+            "\"question\": \"What episode of Mr. Bean saw him trying to prevent people from seeing him naked?\",\n" +
             "\"correct_answer\": \"Mr. Bean in Room 426\",\n" +
             "\"incorrect_answers\": [\n" +
             "\"Mr. Bean Goes to Town\",\n" +

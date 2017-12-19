@@ -16,6 +16,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
+
 public class QuestionActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "QuestionActivity";
@@ -27,7 +30,8 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     JSONObject questionsObject, lTwoQuestionsObject;
     int questionIndex = 0;
     String selectedAnswer;
-    ArrayList<String> wrongAnswers;
+    String source;
+    ArrayList<String> wrongAnswersLevelOne, wrongAnswersLevelTwo, wrongAnswersLevelThree, wrongAnswersLevelFour, wrongAnswersLevelFive;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +42,25 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
         try {
 
-            Log.d(TAG, "onCreate: " + LevelWiseQuestions.levelThreeQuestions);
-
             if (i.getStringExtra("levelSelected").equals("one")) {
+                source = "one";
                 levelWiseQuestions = new JSONObject(LevelWiseQuestions.levelOneQuestions);
                 questionsObject = levelWiseQuestions.getJSONArray("results").getJSONObject(questionIndex);
             } else if (i.getStringExtra("levelSelected").equals("two")) {
+                source = "two";
                 levelWiseQuestions = new JSONObject(LevelWiseQuestions.levelTwoQuestions);
+                questionsObject = levelWiseQuestions.getJSONArray("results").getJSONObject(questionIndex);
+            } else if (i.getStringExtra("levelSelected").equals("three")) {
+                source = "three";
+                levelWiseQuestions = new JSONObject(LevelWiseQuestions.levelThreeQuestions);
+                questionsObject = levelWiseQuestions.getJSONArray("results").getJSONObject(questionIndex);
+            } else if (i.getStringExtra("levelSelected").equals("four")) {
+                source = "four";
+                levelWiseQuestions = new JSONObject(LevelWiseQuestions.levelFourQuestions);
+                questionsObject = levelWiseQuestions.getJSONArray("results").getJSONObject(questionIndex);
+            } else {
+                source = "five";
+                levelWiseQuestions = new JSONObject(LevelWiseQuestions.levelFiveQuestions);
                 questionsObject = levelWiseQuestions.getJSONArray("results").getJSONObject(questionIndex);
             }
 
@@ -69,7 +85,11 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         ans4Tv.setOnClickListener(this);
 
         //Arraylist to store index of wrong answers
-        wrongAnswers = new ArrayList<>();
+        wrongAnswersLevelOne = new ArrayList<>();
+        wrongAnswersLevelTwo = new ArrayList<>();
+        wrongAnswersLevelThree = new ArrayList<>();
+        wrongAnswersLevelFour = new ArrayList<>();
+        wrongAnswersLevelFive = new ArrayList<>();
 
         try {
             if (questionsObject != null) {
@@ -112,8 +132,8 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     //Switch to next question
     private void changeQuestion() {
         questionIndex++;
-        Log.d(TAG, "changeQuestion: " + wrongAnswers);
         try {
+
             questionsObject = levelWiseQuestions.getJSONArray("results").getJSONObject(questionIndex);
             questionTv.setText(questionsObject.getString("question"));
             ans1Tv.setText(questionsObject.getJSONArray("incorrect_answers").getString(0));
@@ -131,10 +151,33 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
             if (selectedAnswer.equals(questionsObject.getString("correct_answer"))) {
                 Toast.makeText(this, "Correct Answer", Toast.LENGTH_SHORT).show();
                 changeQuestion();
+
             } else {
-                Toast.makeText(this, "Incorrect Answer", Toast.LENGTH_SHORT).show();
-                wrongAnswers.add(questionsObject.getString("id"));
-                changeQuestion();
+                
+                new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
+                        .setTitleText("Wrong Answer!")
+                        .setContentText("Correct Answer : " + questionsObject.getString("correct_answer"))
+                        .setConfirmText("Next")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                sweetAlertDialog.dismissWithAnimation();
+                                changeQuestion();
+                            }
+                        })
+                        .show();
+
+                if (source.equals("one"))
+                    wrongAnswersLevelOne.add(questionsObject.getString("id"));
+                else if (source.equals("two"))
+                    wrongAnswersLevelTwo.add(questionsObject.getString("id"));
+                else if (source.equals("three"))
+                    wrongAnswersLevelThree.add(questionsObject.getString("id"));
+                else if (source.equals("four"))
+                    wrongAnswersLevelFour.add(questionsObject.getString("id"));
+                else
+                    wrongAnswersLevelFive.add(questionsObject.getString("id"));
+
             }
         } catch (JSONException e) {
             e.printStackTrace();
