@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,12 +18,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.uddishverma.quiz_app.R;
+import com.example.uddishverma.quiz_app.Utils.Preferences;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
+    private static final String TAG = "MainActivity";
     CardView levelOne, levelTwo, levelThree, levelFour, levelFive;
     String levelSelected;
     Intent i;
@@ -135,8 +139,14 @@ public class MainActivity extends AppCompatActivity
         switch (view.getId()) {
             case R.id.level_one:
                 levelSelected = "one";
-                i.putExtra("levelSelected", levelSelected);
-                startActivity(i);
+                if ((Preferences.getPrefs("isLevelOneCompleted", MainActivity.this)).equals("2001")) {
+                    Log.d(TAG, "TOAST: " + Preferences.getPrefs("isLevelOneSelected", getApplicationContext()));
+                    Toast.makeText(this, "Level 1 Completed!", Toast.LENGTH_SHORT).show();
+                } else {
+                    i.putExtra("levelSelected", levelSelected);
+                    Log.d(TAG, "START ACTIVITY: " + Preferences.getPrefs("isLevelOneCompleted", getApplicationContext()));
+                    startActivity(i);
+                }
                 break;
             case R.id.level_two:
                 levelSelected = "two";

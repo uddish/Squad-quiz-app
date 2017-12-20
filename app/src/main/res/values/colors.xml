@@ -9,4 +9,10 @@
     <color name="toryBlue">#3D5392</color>
     <color name="resolutionBlue">#2B386F</color>
     <color name="darkBlue">#23283D</color>
+    <color name="yellow">#FBD233</color>
+    <color name="grey">#888</color>
+    <color name="darkRed">#A31E32</color>
+    <color name="darkYellow">#E6B63B</color>
+    <color name="orange">#FE965B</color>
+    <color name="black">#000</color>
 </resources>

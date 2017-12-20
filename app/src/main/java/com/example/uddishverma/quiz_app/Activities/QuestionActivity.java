@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.uddishverma.quiz_app.R;
+import com.example.uddishverma.quiz_app.Utils.Globals;
 import com.example.uddishverma.quiz_app.Utils.LevelWiseQuestions;
 import com.example.uddishverma.quiz_app.Utils.Preferences;
 import com.google.gson.Gson;
@@ -43,6 +44,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     String selectedAnswer;
     String source;
     ArrayList<String> wrongAnswersLevelOne, wrongAnswersLevelTwo, wrongAnswersLevelThree, wrongAnswersLevelFour, wrongAnswersLevelFive;
+    static int randomIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,13 +58,13 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
         try {
 
+            /*
+             * Retrieving the data from the shared preferences
+             * When not found -> copying the questions to arraylist
+             */
+
             if (i.getStringExtra("levelSelected").equals("one")) {
                 source = "one";
-
-                /**
-                 * Retrieving the data from the shared preferences
-                 * When not found -> copying the questions to arraylist
-                 */
 
                 levelWiseQuestions = new JSONObject(LevelWiseQuestions.levelOneQuestions);
                 questionsObject = levelWiseQuestions.getJSONArray("results").getJSONObject(questionIndex);
@@ -71,7 +73,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                     totalQuestions = new ArrayList<>();
                     Log.d(TAG, "onCreate: Arraylist 1 does not exists");
                     for (int i = 0; i < 10; i++) {
-                        totalQuestions.add(String.valueOf(Integer.parseInt(levelWiseQuestions.getJSONArray("results").getJSONObject(i).getString("id")) - 1));
+                        totalQuestions.add(String.valueOf(Integer.parseInt(levelWiseQuestions.getJSONArray("results").getJSONObject(i).getString("id"))));
                     }
                 } else {
                     String preferenceString = Preferences.getPrefs("levelOneList", QuestionActivity.this);
@@ -87,7 +89,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                     totalQuestions = new ArrayList<>();
                     Log.d(TAG, "onCreate: Arraylist 2 does not exists");
                     for (int i = 0; i < 10; i++) {
-                        totalQuestions.add(String.valueOf(Integer.parseInt(levelWiseQuestions.getJSONArray("results").getJSONObject(i).getString("id")) - 1));
+                        totalQuestions.add(String.valueOf(Integer.parseInt(levelWiseQuestions.getJSONArray("results").getJSONObject(i).getString("id"))));
                     }
                 } else {
                     String preferenceString = Preferences.getPrefs("levelTwoList", QuestionActivity.this);
@@ -102,7 +104,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                     totalQuestions = new ArrayList<>();
                     Log.d(TAG, "onCreate: Arraylist 3 does not exists");
                     for (int i = 0; i < 10; i++) {
-                        totalQuestions.add(String.valueOf(Integer.parseInt(levelWiseQuestions.getJSONArray("results").getJSONObject(i).getString("id")) - 1));
+                        totalQuestions.add(String.valueOf(Integer.parseInt(levelWiseQuestions.getJSONArray("results").getJSONObject(i).getString("id"))));
                     }
                 } else {
                     String preferenceString = Preferences.getPrefs("levelThreeList", QuestionActivity.this);
@@ -118,7 +120,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                     totalQuestions = new ArrayList<>();
                     Log.d(TAG, "onCreate: Arraylist 4 does not exists");
                     for (int i = 0; i < 10; i++) {
-                        totalQuestions.add(String.valueOf(Integer.parseInt(levelWiseQuestions.getJSONArray("results").getJSONObject(i).getString("id")) - 1));
+                        totalQuestions.add(String.valueOf(Integer.parseInt(levelWiseQuestions.getJSONArray("results").getJSONObject(i).getString("id"))));
                     }
                 } else {
                     String preferenceString = Preferences.getPrefs("levelFourList", QuestionActivity.this);
@@ -135,7 +137,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                     totalQuestions = new ArrayList<>();
                     Log.d(TAG, "onCreate: Arraylist 5 does not exists");
                     for (int i = 0; i < 10; i++) {
-                        totalQuestions.add(String.valueOf(Integer.parseInt(levelWiseQuestions.getJSONArray("results").getJSONObject(i).getString("id")) - 1));
+                        totalQuestions.add(String.valueOf(Integer.parseInt(levelWiseQuestions.getJSONArray("results").getJSONObject(i).getString("id"))));
                     }
                 } else {
                     String preferenceString = Preferences.getPrefs("levelFiveList", QuestionActivity.this);
@@ -222,7 +224,6 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     private void changeQuestion() {
 
         Log.d(TAG, "changeQuestion: Total Questions " + totalQuestions);
-        questionIndex++;
 
         //TODO check if the question is repeated or not
         //Shuffle arraylist and show a random question;
@@ -234,17 +235,42 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         }
 
         //Check for same questions if repeating
-        int randomIndex = 0;
         if (totalQuestions.size() != 1 && totalQuestions.size() > 0) {
             while (totalQuestions.get(0).equals(previousIndex)) {
                 Log.d(TAG, "changeQuestion: Repeating questions");
                 Collections.shuffle(totalQuestions);
             }
             randomIndex = Integer.parseInt(totalQuestions.get(0));
+        } else if (totalQuestions.size() == 1) {
+            randomIndex = Integer.parseInt(totalQuestions.get(0));
         }
 
         if (totalQuestions.size() == 0) {
-            Toast.makeText(this, "Level " + source + " completed!", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(QuestionActivity.this, LevelCompleted.class);
+            i.putExtra("source", source);
+            if(source.equals("one"))    {
+                Globals.isLevelOneCompleted = 2001;
+                Preferences.setPrefs("isLevelOneCompleted", String.valueOf(Globals.isLevelOneCompleted), QuestionActivity.this);
+            }
+            else if(source.equals("two"))    {
+                Globals.isLevelTwoCompleted = 2002;
+                Preferences.setPrefs("isLevelTwoCompleted", String.valueOf(Globals.isLevelTwoCompleted), QuestionActivity.this);
+            }
+            else if(source.equals("three"))    {
+                Globals.isLevelThreeCompleted = 2003;
+                Preferences.setPrefs("isLevelThreeCompleted", String.valueOf(Globals.isLevelThreeCompleted), QuestionActivity.this);
+            }
+            else if(source.equals("four"))    {
+                Globals.isLevelTwoCompleted = 2004;
+                Preferences.setPrefs("isLevelFourCompleted", String.valueOf(Globals.isLevelFourCompleted), QuestionActivity.this);
+            }
+            else if(source.equals("five"))    {
+                Globals.isLevelTwoCompleted = 2005;
+                Preferences.setPrefs("isLevelFiveCompleted", String.valueOf(Globals.isLevelFiveCompleted), QuestionActivity.this);
+            }
+
+            startActivity(i);
+            finish();
         }
 
         //Adding current questions in shared preferences
@@ -279,18 +305,24 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     private void checkForCorrectAnswer() {
         try {
 
-            String questionId = String.valueOf(Integer.parseInt(questionsObject.getString("id")) - 1);
+//            String questionId = String.valueOf(Integer.parseInt(questionsObject.getString("id")) - 1);
+            String questionId = String.valueOf(questionsObject.getString("id"));
 
             if (selectedAnswer.equals(questionsObject.getString("correct_answer"))) {
+
+                for (int i = 0; i < totalQuestions.size(); i++) {
+                    Log.d(TAG, "checkForCorrectAnswer: Index: " + totalQuestions.indexOf(questionId) + ", Element: " + questionId);
+                }
 
                 if (reviewQuestionsMap.containsKey(questionId)) {
                     reviewQuestionsMap.put(questionId, reviewQuestionsMap.get(questionId) - 1);
                     if (reviewQuestionsMap.get(questionId) == 0) {
-                        totalQuestions.remove(String.valueOf(questionId));
+                        totalQuestions.remove(0);
                     }
                 } else {
-                    totalQuestions.remove(String.valueOf(questionId));
+                    totalQuestions.remove(0);
                 }
+
 
                 Toast.makeText(this, "Correct Answer", Toast.LENGTH_SHORT).show();
 
@@ -322,7 +354,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
             }
 
-            Log.d(TAG, "checkForCorrectAnswer: " + questionId + "--->" + reviewQuestionsMap.get(questionId));
+//            Log.d(TAG, "checkForCorrectAnswer: " + questionId + "--->" + reviewQuestionsMap.get(questionId));
 
         } catch (JSONException e) {
             e.printStackTrace();
