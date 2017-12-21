@@ -46,6 +46,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     String source;
     ArrayList<String> wrongAnswersLevelOne, wrongAnswersLevelTwo, wrongAnswersLevelThree, wrongAnswersLevelFour, wrongAnswersLevelFive;
     static int randomIndex = 0;
+    String remainingQuestionString, correctQuestionString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,13 +73,15 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
                 if (Preferences.getPrefs("levelOneList", QuestionActivity.this).equals("notfound")) {
                     totalQuestions = new ArrayList<>();
-                    Log.d(TAG, "onCreate: Arraylist 1 does not exists");
+                    correctQuestions = new ArrayList<>();
                     for (int i = 0; i < 10; i++) {
                         totalQuestions.add(String.valueOf(Integer.parseInt(levelWiseQuestions.getJSONArray("results").getJSONObject(i).getString("id"))));
                     }
                 } else {
-                    String preferenceString = Preferences.getPrefs("levelOneList", QuestionActivity.this);
-                    totalQuestions = changeStringToList(preferenceString);
+                    remainingQuestionString = Preferences.getPrefs("levelOneList", QuestionActivity.this);
+                    correctQuestionString = Preferences.getPrefs("levelOneCorrectList", QuestionActivity.this);
+                    totalQuestions = changeStringToList(remainingQuestionString);
+                    correctQuestions = changeStringToList(correctQuestionString);
                 }
 
             } else if (i.getStringExtra("levelSelected").equals("two")) {
@@ -88,13 +91,15 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
                 if (Preferences.getPrefs("levelTwoList", QuestionActivity.this).equals("notfound")) {
                     totalQuestions = new ArrayList<>();
-                    Log.d(TAG, "onCreate: Arraylist 2 does not exists");
+                    correctQuestions = new ArrayList<>();
                     for (int i = 0; i < 10; i++) {
                         totalQuestions.add(String.valueOf(Integer.parseInt(levelWiseQuestions.getJSONArray("results").getJSONObject(i).getString("id"))));
                     }
                 } else {
-                    String preferenceString = Preferences.getPrefs("levelTwoList", QuestionActivity.this);
-                    totalQuestions = changeStringToList(preferenceString);
+                    remainingQuestionString = Preferences.getPrefs("levelTwoList", QuestionActivity.this);
+                    correctQuestionString = Preferences.getPrefs("levelTwoCorrectList", QuestionActivity.this);
+                    totalQuestions = changeStringToList(remainingQuestionString);
+                    correctQuestions = changeStringToList(correctQuestionString);
                 }
             } else if (i.getStringExtra("levelSelected").equals("three")) {
                 source = "three";
@@ -103,13 +108,15 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
                 if (Preferences.getPrefs("levelThreeList", QuestionActivity.this).equals("notfound")) {
                     totalQuestions = new ArrayList<>();
-                    Log.d(TAG, "onCreate: Arraylist 3 does not exists");
+                    correctQuestions = new ArrayList<>();
                     for (int i = 0; i < 10; i++) {
                         totalQuestions.add(String.valueOf(Integer.parseInt(levelWiseQuestions.getJSONArray("results").getJSONObject(i).getString("id"))));
                     }
                 } else {
-                    String preferenceString = Preferences.getPrefs("levelThreeList", QuestionActivity.this);
-                    totalQuestions = changeStringToList(preferenceString);
+                    remainingQuestionString = Preferences.getPrefs("levelThreeList", QuestionActivity.this);
+                    correctQuestionString = Preferences.getPrefs("levelThreeCorrectList", QuestionActivity.this);
+                    totalQuestions = changeStringToList(remainingQuestionString);
+                    correctQuestions = changeStringToList(correctQuestionString);
                 }
             } else if (i.getStringExtra("levelSelected").equals("four")) {
                 source = "four";
@@ -119,13 +126,15 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
                 if (Preferences.getPrefs("levelFourList", QuestionActivity.this).equals("notfound")) {
                     totalQuestions = new ArrayList<>();
-                    Log.d(TAG, "onCreate: Arraylist 4 does not exists");
+                    correctQuestions = new ArrayList<>();
                     for (int i = 0; i < 10; i++) {
                         totalQuestions.add(String.valueOf(Integer.parseInt(levelWiseQuestions.getJSONArray("results").getJSONObject(i).getString("id"))));
                     }
                 } else {
-                    String preferenceString = Preferences.getPrefs("levelFourList", QuestionActivity.this);
-                    totalQuestions = changeStringToList(preferenceString);
+                    remainingQuestionString = Preferences.getPrefs("levelFourList", QuestionActivity.this);
+                    correctQuestionString = Preferences.getPrefs("levelFourCorrectList", QuestionActivity.this);
+                    totalQuestions = changeStringToList(remainingQuestionString);
+                    correctQuestions = changeStringToList(correctQuestionString);
                 }
 
             } else if (i.getStringExtra("levelSelected").equals("five")) {
@@ -136,13 +145,15 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
                 if (Preferences.getPrefs("levelFiveList", QuestionActivity.this).equals("notfound")) {
                     totalQuestions = new ArrayList<>();
-                    Log.d(TAG, "onCreate: Arraylist 5 does not exists");
+                    correctQuestions = new ArrayList<>();
                     for (int i = 0; i < 10; i++) {
                         totalQuestions.add(String.valueOf(Integer.parseInt(levelWiseQuestions.getJSONArray("results").getJSONObject(i).getString("id"))));
                     }
                 } else {
-                    String preferenceString = Preferences.getPrefs("levelFiveList", QuestionActivity.this);
-                    totalQuestions = changeStringToList(preferenceString);
+                    remainingQuestionString = Preferences.getPrefs("levelFiveList", QuestionActivity.this);
+                    correctQuestionString = Preferences.getPrefs("levelFiveCorrectList", QuestionActivity.this);
+                    totalQuestions = changeStringToList(remainingQuestionString);
+                    correctQuestions = changeStringToList(correctQuestionString);
                 }
             }
 
@@ -230,26 +241,40 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         //Shuffle arraylist and show a random question;
         String previousIndex = null;
 
+        try {
 
-        if (totalQuestions.size() > 0) {
-            previousIndex = totalQuestions.get(0);
-            Collections.shuffle(totalQuestions);
-        }
-
-        //Check for same questions if repeating
-        if (totalQuestions.size() != 1 && totalQuestions.size() > 0) {
-            while (totalQuestions.get(0).equals(previousIndex)) {
-                Log.d(TAG, "changeQuestion: Repeating questions");
+            if (totalQuestions.size() > 0) {
+                previousIndex = totalQuestions.get(0);
                 Collections.shuffle(totalQuestions);
             }
-            randomIndex = Integer.parseInt(totalQuestions.get(0));
-        } else if (totalQuestions.size() == 1) {
-            randomIndex = Integer.parseInt(totalQuestions.get(0));
-        }
 
-        //Setting if the question is reviewed or learned
-        try {
-//
+            //Check for same questions if repeating
+            if (totalQuestions.size() != 1 && totalQuestions.size() > 0) {
+                while (totalQuestions.get(0).equals(previousIndex)) {
+                    Log.d(TAG, "changeQuestion: Repeating questions");
+                    Collections.shuffle(totalQuestions);
+                }
+                randomIndex = Integer.parseInt(totalQuestions.get(0));
+            } else if (totalQuestions.size() == 1) {
+                randomIndex = Integer.parseInt(totalQuestions.get(0));
+
+                //Add extra questions if the last question is wrong
+                if (reviewQuestionsMap.containsKey(questionsObject.getString("id")) && reviewQuestionsMap.get(questionsObject.getString("id")) > 0) {
+                    Collections.shuffle(correctQuestions);
+                    totalQuestions.add(correctQuestions.get(0));
+                    totalQuestions.add(correctQuestions.get(1));
+
+                    //Putting mastered questions in the map with value -1
+                    reviewQuestionsMap.put(correctQuestions.get(0), -1);
+                    reviewQuestionsMap.put(correctQuestions.get(1), -1);
+
+                    correctQuestions.remove(0);
+                    correctQuestions.remove(1);
+                }
+
+            }
+
+            //Setting if the question is reviewed or learned
             if (totalQuestions.size() == 0) {
                 Intent i = new Intent(QuestionActivity.this, LevelCompleted.class);
                 i.putExtra("source", source);
@@ -282,34 +307,43 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
              */
             Gson gson = new Gson();
             String remainingQuestions = gson.toJson(totalQuestions);
+            String correctQuestion = gson.toJson(correctQuestions);
+            //Checking for the number of mastered questions
+            int masterQuestions = masterQuestionCheck(reviewQuestionsMap);
+
             if (source.equals("one")) {
                 Preferences.setPrefs("levelOneList", remainingQuestions, getApplicationContext());
+                Preferences.setPrefs("levelOneCorrectList", correctQuestion, getApplicationContext());
                 //Saving the size of the arraylist
-                Preferences.setPrefs("sizeListLevelOne", String.valueOf(totalQuestions.size()), QuestionActivity.this);
+                Preferences.setPrefs("sizeListLevelOne", String.valueOf(totalQuestions.size() - masterQuestions), QuestionActivity.this);
                 //Saving hashmap of level 1
                 saveHashMap(reviewQuestionsMap, source);
             } else if (source.equals("two")) {
                 Preferences.setPrefs("levelTwoList", remainingQuestions, getApplicationContext());
+                Preferences.setPrefs("levelTwoCorrectList", correctQuestion, getApplicationContext());
                 //Saving the size of the arraylist
-                Preferences.setPrefs("sizeListLevelTwo", String.valueOf(totalQuestions.size()), QuestionActivity.this);
+                Preferences.setPrefs("sizeListLevelTwo", String.valueOf(totalQuestions.size() - masterQuestions), QuestionActivity.this);
                 //Saving hashmap of level 2
                 saveHashMap(reviewQuestionsMap, source);
             } else if (source.equals("three")) {
-                Preferences.setPrefs("sizeListLevelThree", String.valueOf(totalQuestions.size()), QuestionActivity.this);
+                Preferences.setPrefs("sizeListLevelThree", String.valueOf(totalQuestions.size() - masterQuestions), QuestionActivity.this);
+                Preferences.setPrefs("levelThreeCorrectList", correctQuestion, getApplicationContext());
                 //Saving the size of the arraylist
                 Preferences.setPrefs("levelThreeList", remainingQuestions, getApplicationContext());
                 //Saving hashmap of level 3
                 saveHashMap(reviewQuestionsMap, source);
             } else if (source.equals("four")) {
                 Preferences.setPrefs("levelFourList", remainingQuestions, getApplicationContext());
+                Preferences.setPrefs("levelFourCorrectList", correctQuestion, getApplicationContext());
                 //Saving the size of the arraylist
-                Preferences.setPrefs("sizeListLevelFour", String.valueOf(totalQuestions.size()), QuestionActivity.this);
+                Preferences.setPrefs("sizeListLevelFour", String.valueOf(totalQuestions.size() - masterQuestions), QuestionActivity.this);
                 //Saving hashmap of level 4
                 saveHashMap(reviewQuestionsMap, source);
             } else {
                 Preferences.setPrefs("levelFiveList", remainingQuestions, getApplicationContext());
+                Preferences.setPrefs("levelFiveCorrectList", correctQuestion, getApplicationContext());
                 //Saving the size of the arraylist
-                Preferences.setPrefs("sizeListLevelFive", String.valueOf(totalQuestions.size()), QuestionActivity.this);
+                Preferences.setPrefs("sizeListLevelFive", String.valueOf(totalQuestions.size() - masterQuestions), QuestionActivity.this);
                 //Saving hashmap of level 5
                 saveHashMap(reviewQuestionsMap, source);
             }
@@ -327,8 +361,14 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                 if (reviewQuestionsMap.get(questionsObject.getString("id")) == 3) {
                     reviewTv.setText("Learning");
                     reviewTv.setBackgroundResource(R.drawable.red_box);
-                } else if (reviewQuestionsMap.get(questionsObject.getString("id")) < 3) {
+                } else if (reviewQuestionsMap.get(questionsObject.getString("id")) == 2) {
                     reviewTv.setText("Revising");
+                    reviewTv.setBackgroundResource(R.drawable.green_box);
+                } else if (reviewQuestionsMap.get(questionsObject.getString("id")) == 1) {
+                    reviewTv.setText("Checking");
+                    reviewTv.setBackgroundResource(R.drawable.green_box);
+                } else if (reviewQuestionsMap.get(questionsObject.getString("id")) == -1) {
+                    reviewTv.setText("Mastered");
                     reviewTv.setBackgroundResource(R.drawable.green_box);
                 }
             } else {
@@ -351,10 +391,17 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
             if (selectedAnswer.equals(questionsObject.getString("correct_answer"))) {
 
                 if (reviewQuestionsMap.containsKey(questionId)) {
-                    reviewQuestionsMap.put(questionId, reviewQuestionsMap.get(questionId) - 1);
-                    if (reviewQuestionsMap.get(questionId) == 0) {
+                    //If mastered questions comes in the quiz
+                    if (reviewQuestionsMap.get(questionId) == -1) {
                         totalQuestions.remove(0);
+                        reviewQuestionsMap.remove(questionId);
+                    } else {
+                        reviewQuestionsMap.put(questionId, reviewQuestionsMap.get(questionId) - 1);
+                        if (reviewQuestionsMap.get(questionId) == 0) {
+                            totalQuestions.remove(0);
+                        }
                     }
+
                 } else {
                     totalQuestions.remove(0);
                 }
@@ -363,6 +410,8 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
                 //Adding the id of the correct questions;
                 correctQuestions.add(questionId);
+
+                Log.d(TAG, "checkForCorrectAnswer: Correct Questions Array " + correctQuestions);
 
                 changeQuestion();
 
@@ -457,6 +506,19 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         this.startActivity(new Intent(QuestionActivity.this, MainActivity.class));
         finish();
         return;
+    }
+
+    public static int masterQuestionCheck(HashMap<String, Integer> mp) {
+        Iterator it = mp.entrySet().iterator();
+        int masterQuestions = 0;
+        while (it.hasNext()) {
+            HashMap.Entry pair = (HashMap.Entry) it.next();
+
+            if (Integer.parseInt(String.valueOf(pair.getValue())) == -1) {
+                masterQuestions++;
+            }
+        }
+        return masterQuestions;
     }
 
 }
