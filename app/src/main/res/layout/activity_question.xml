@@ -5,25 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context="com.example.uddishverma.quiz_app.Activities.QuestionActivity">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="5dp"
+        android:layout_margin="6dp"
         android:layout_weight="1">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@drawable/darkblue_box">
 
             <TextView
                 android:id="@+id/review_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:padding="8dp"
-                android:text=" "/>
+                android:padding="4dp"
+                android:layout_margin="6dp"
+                android:text=" " />
 
             <TextView
                 android:id="@+id/question_tv"
@@ -37,11 +40,12 @@
 
     </android.support.v7.widget.CardView>
 
-    <android.support.v7.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="5dp"
-        android:layout_weight="0.7">
+        android:layout_weight="0.7"
+        android:background="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -64,6 +68,7 @@
                         android:id="@+id/answer1_tv"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@drawable/blue_box"
                         android:gravity="center"
                         android:text="Answer 1" />
 
@@ -79,6 +84,7 @@
                         android:id="@+id/answer2_tv"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@drawable/blue_box"
                         android:gravity="center"
                         android:text="Answer 2" />
 
@@ -101,6 +107,7 @@
                         android:id="@+id/answer3_tv"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@drawable/blue_box"
                         android:gravity="center"
                         android:text="Answer 3" />
 
@@ -116,6 +123,7 @@
                         android:id="@+id/answer4_tv"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@drawable/blue_box"
                         android:gravity="center"
                         android:text="Answer 4" />
                 </android.support.v7.widget.CardView>
@@ -123,6 +131,6 @@
 
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+    </LinearLayout>
 
 </LinearLayout>

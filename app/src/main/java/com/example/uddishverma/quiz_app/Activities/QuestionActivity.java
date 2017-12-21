@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -54,7 +55,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
         totalQuestions = new ArrayList<>();
         correctQuestions = new ArrayList<>();
-        reviewQuestionsMap = new HashMap<String, Integer>();
+        reviewQuestionsMap = loadHashMap(i.getStringExtra("levelSelected"));
 
         try {
 
@@ -273,29 +274,44 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                 finish();
             }
 
-            //Adding current questions in shared preferences with their size
+            /**
+             *
+             * Saving Arraylist of wrong questions
+             * Saving hashmap of wrong questions for reviewing
+             * Saving size of arraylist
+             */
             Gson gson = new Gson();
             String remainingQuestions = gson.toJson(totalQuestions);
             if (source.equals("one")) {
                 Preferences.setPrefs("levelOneList", remainingQuestions, getApplicationContext());
                 //Saving the size of the arraylist
                 Preferences.setPrefs("sizeListLevelOne", String.valueOf(totalQuestions.size()), QuestionActivity.this);
+                //Saving hashmap of level 1
+                saveHashMap(reviewQuestionsMap, source);
             } else if (source.equals("two")) {
                 Preferences.setPrefs("levelTwoList", remainingQuestions, getApplicationContext());
                 //Saving the size of the arraylist
                 Preferences.setPrefs("sizeListLevelTwo", String.valueOf(totalQuestions.size()), QuestionActivity.this);
+                //Saving hashmap of level 2
+                saveHashMap(reviewQuestionsMap, source);
             } else if (source.equals("three")) {
                 Preferences.setPrefs("sizeListLevelThree", String.valueOf(totalQuestions.size()), QuestionActivity.this);
                 //Saving the size of the arraylist
                 Preferences.setPrefs("levelThreeList", remainingQuestions, getApplicationContext());
+                //Saving hashmap of level 3
+                saveHashMap(reviewQuestionsMap, source);
             } else if (source.equals("four")) {
                 Preferences.setPrefs("levelFourList", remainingQuestions, getApplicationContext());
                 //Saving the size of the arraylist
                 Preferences.setPrefs("sizeListLevelFour", String.valueOf(totalQuestions.size()), QuestionActivity.this);
+                //Saving hashmap of level 4
+                saveHashMap(reviewQuestionsMap, source);
             } else {
                 Preferences.setPrefs("levelFiveList", remainingQuestions, getApplicationContext());
                 //Saving the size of the arraylist
                 Preferences.setPrefs("sizeListLevelFive", String.valueOf(totalQuestions.size()), QuestionActivity.this);
+                //Saving hashmap of level 5
+                saveHashMap(reviewQuestionsMap, source);
             }
 
             //getting the correct indexed question
@@ -310,11 +326,15 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
             if (reviewQuestionsMap.containsKey(questionsObject.getString("id"))) {
                 if (reviewQuestionsMap.get(questionsObject.getString("id")) == 3) {
                     reviewTv.setText("Learning");
+                    reviewTv.setBackgroundResource(R.drawable.red_box);
                 } else if (reviewQuestionsMap.get(questionsObject.getString("id")) < 3) {
                     reviewTv.setText("Revising");
+                    reviewTv.setBackgroundResource(R.drawable.green_box);
                 }
             } else {
+                reviewTv.setBackgroundResource(R.color.white);
                 reviewTv.setText(" ");
+
             }
 
         } catch (JSONException e) {
@@ -374,6 +394,63 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private void saveHashMap(HashMap<String, Integer> map, String source) {
+        JSONObject jsonObject = new JSONObject(map);
+        String mapString = jsonObject.toString();
+        if (source.equals("one")) {
+            Preferences.setPrefs("levelOneMap", mapString, QuestionActivity.this);
+        } else if (source.equals("two")) {
+            Preferences.setPrefs("levelTwoMap", mapString, QuestionActivity.this);
+        } else if (source.equals("three")) {
+            Preferences.setPrefs("levelthreeMap", mapString, QuestionActivity.this);
+        } else if (source.equals("four")) {
+            Preferences.setPrefs("levelFourMap", mapString, QuestionActivity.this);
+        } else if (source.equals("five")) {
+            Preferences.setPrefs("levelFiveMap", mapString, QuestionActivity.this);
+        }
+    }
+
+    private HashMap<String, Integer> loadHashMap(String source) {
+        HashMap<String, Integer> map = new HashMap<>();
+
+        String mapString = null;
+
+        if (source.equals("one")) {
+            mapString = Preferences.getPrefs("levelOneMap", QuestionActivity.this);
+        } else if (source.equals("two")) {
+            mapString = Preferences.getPrefs("levelTwoMap", QuestionActivity.this);
+        } else if (source.equals("three")) {
+            mapString = Preferences.getPrefs("levelThreeMap", QuestionActivity.this);
+        } else if (source.equals("four")) {
+            mapString = Preferences.getPrefs("levelFourMap", QuestionActivity.this);
+        } else if (source.equals("five")) {
+            mapString = Preferences.getPrefs("levelFiveMap", QuestionActivity.this);
+        }
+
+        try {
+            //If no stored hashmap is found return a new hashmap
+            if (mapString.equals("notfound")) {
+                Log.d(TAG, "loadHashMap: Returning new Hashmap as no saved hashmap is found");
+                map = new HashMap<>();
+                return map;
+            } else {
+                Log.d(TAG, "loadHashMap: Loading hashmap from memory");
+                JSONObject jsonObject = new JSONObject(mapString);
+                Iterator<String> keyItr = jsonObject.keys();
+                while (keyItr.hasNext()) {
+                    String k = keyItr.next();
+                    Integer v = (Integer) jsonObject.get(k);
+                    map.put(k, v);
+                }
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return map;
     }
 
     public void onBackPressed() {

@@ -22,6 +22,8 @@ import android.widget.Toast;
 import com.example.uddishverma.quiz_app.R;
 import com.example.uddishverma.quiz_app.Utils.Preferences;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
@@ -185,27 +187,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -213,17 +194,9 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_account) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_settings) {
 
         }
 
@@ -250,7 +223,7 @@ public class MainActivity extends AppCompatActivity
                 if ((Preferences.getPrefs("isLevelTwoCompleted", MainActivity.this)).equals("2002")) {
                     Toast.makeText(this, "Level 2 Completed!", Toast.LENGTH_SHORT).show();
                 } else if (!(Preferences.getPrefs("isLevelOneCompleted", MainActivity.this)).equals("2001")) {
-                    Toast.makeText(this, "Complete Level 1 First", Toast.LENGTH_SHORT).show();
+                    showAlert("Complete Level 1 First");
                 } else {
                     i.putExtra("levelSelected", levelSelected);
                     startActivity(i);
@@ -262,7 +235,7 @@ public class MainActivity extends AppCompatActivity
                 if ((Preferences.getPrefs("isLevelThreeCompleted", MainActivity.this)).equals("2003")) {
                     Toast.makeText(this, "Level 3 Completed!", Toast.LENGTH_SHORT).show();
                 } else if (!(Preferences.getPrefs("isLevelTwoCompleted", MainActivity.this)).equals("2002")) {
-                    Toast.makeText(this, "Complete Level 2 First", Toast.LENGTH_SHORT).show();
+                    showAlert("Complete Level 2 First");
                 } else {
                     i.putExtra("levelSelected", levelSelected);
                     startActivity(i);
@@ -274,7 +247,7 @@ public class MainActivity extends AppCompatActivity
                 if ((Preferences.getPrefs("isLevelFourCompleted", MainActivity.this)).equals("2004")) {
                     Toast.makeText(this, "Level 4 Completed!", Toast.LENGTH_SHORT).show();
                 } else if (!(Preferences.getPrefs("isLevelThreeCompleted", MainActivity.this)).equals("2003")) {
-                    Toast.makeText(this, "Complete Level 3 First", Toast.LENGTH_SHORT).show();
+                    showAlert("Complete Level 3 First");
                 } else {
                     i.putExtra("levelSelected", levelSelected);
                     startActivity(i);
@@ -286,7 +259,7 @@ public class MainActivity extends AppCompatActivity
                 if ((Preferences.getPrefs("isLevelFiveCompleted", MainActivity.this)).equals("2005")) {
                     Toast.makeText(this, "Level 5 Completed!", Toast.LENGTH_SHORT).show();
                 } else if (!(Preferences.getPrefs("isLevelFourCompleted", MainActivity.this)).equals("2004")) {
-                    Toast.makeText(this, "Complete Level 4 First", Toast.LENGTH_SHORT).show();
+                    showAlert("Complete Level 4 First");
                 } else {
                     i.putExtra("levelSelected", levelSelected);
                     startActivity(i);
@@ -296,5 +269,12 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    private void showAlert(String s) {
+
+        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("Level Locked!")
+                .setContentText(s)
+                .show();
+    }
 
 }
