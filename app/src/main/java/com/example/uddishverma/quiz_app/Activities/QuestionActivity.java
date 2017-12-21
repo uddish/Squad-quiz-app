@@ -229,6 +229,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         //Shuffle arraylist and show a random question;
         String previousIndex = null;
 
+
         if (totalQuestions.size() > 0) {
             previousIndex = totalQuestions.get(0);
             Collections.shuffle(totalQuestions);
@@ -247,11 +248,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
         //Setting if the question is reviewed or learned
         try {
-//            if (reviewQuestionsMap.get(totalQuestions.get(0)) == 3) {
-//                reviewTv.setText("Learning");
-//            } else {
-//                reviewTv.setText("Revising");
-//            }
+//
             if (totalQuestions.size() == 0) {
                 Intent i = new Intent(QuestionActivity.this, LevelCompleted.class);
                 i.putExtra("source", source);
@@ -308,6 +305,18 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
             ans2Tv.setText(questionsObject.getJSONArray("incorrect_answers").getString(1));
             ans3Tv.setText(questionsObject.getJSONArray("incorrect_answers").getString(2));
             ans4Tv.setText(questionsObject.getJSONArray("incorrect_answers").getString(3));
+
+            //Checking the status of wrong question (Review/Learning)
+            if (reviewQuestionsMap.containsKey(questionsObject.getString("id"))) {
+                if (reviewQuestionsMap.get(questionsObject.getString("id")) == 3) {
+                    reviewTv.setText("Learning");
+                } else if (reviewQuestionsMap.get(questionsObject.getString("id")) < 3) {
+                    reviewTv.setText("Revising");
+                }
+            } else {
+                reviewTv.setText(" ");
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -321,17 +330,12 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
             if (selectedAnswer.equals(questionsObject.getString("correct_answer"))) {
 
-                for (int i = 0; i < totalQuestions.size(); i++) {
-                    Log.d(TAG, "checkForCorrectAnswer: Index: " + totalQuestions.indexOf(questionId) + ", Element: " + questionId);
-                }
-
                 if (reviewQuestionsMap.containsKey(questionId)) {
                     reviewQuestionsMap.put(questionId, reviewQuestionsMap.get(questionId) - 1);
                     if (reviewQuestionsMap.get(questionId) == 0) {
                         totalQuestions.remove(0);
                     }
                 } else {
-                    reviewTv.setText("");
                     totalQuestions.remove(0);
                 }
 
@@ -341,6 +345,8 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                 correctQuestions.add(questionId);
 
                 changeQuestion();
+
+                Log.d(TAG, " Value ---> " + reviewQuestionsMap.get(questionId) + ", Key -----> " + questionId);
 
             } else {
 
@@ -360,6 +366,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                         })
                         .show();
 
+                Log.d(TAG, " Value ---> " + reviewQuestionsMap.get(questionId) + ", Key -----> " + questionId);
 
             }
 
@@ -368,4 +375,11 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
             e.printStackTrace();
         }
     }
+
+    public void onBackPressed() {
+        this.startActivity(new Intent(QuestionActivity.this, MainActivity.class));
+        finish();
+        return;
+    }
+
 }

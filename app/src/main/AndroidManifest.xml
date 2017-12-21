@@ -21,8 +21,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.QuestionActivity" />
-        <activity android:name=".Activities.LevelCompleted"></activity>
+        <activity
+            android:name=".Activities.QuestionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.LevelCompleted"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

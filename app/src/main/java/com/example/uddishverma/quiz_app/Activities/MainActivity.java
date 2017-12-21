@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity
         } else {
             if (Integer.parseInt(levelOneSize) == 0) {
                 //Setting the icons
-                imgOne.setVisibility(View.VISIBLE);
+                imgOne.setImageResource(R.drawable.tick_icon);
                 imgTwo.setImageResource(R.drawable.ic_keyboard_arrow_right);
             }
             levelSizeOneTv.setText((10 - Integer.parseInt(levelOneSize)) + "/10");
@@ -242,6 +242,7 @@ public class MainActivity extends AppCompatActivity
                 } else {
                     i.putExtra("levelSelected", levelSelected);
                     startActivity(i);
+                    finish();
                 }
                 break;
             case R.id.level_two:
@@ -253,6 +254,7 @@ public class MainActivity extends AppCompatActivity
                 } else {
                     i.putExtra("levelSelected", levelSelected);
                     startActivity(i);
+                    finish();
                 }
                 break;
             case R.id.level_three:
@@ -264,6 +266,7 @@ public class MainActivity extends AppCompatActivity
                 } else {
                     i.putExtra("levelSelected", levelSelected);
                     startActivity(i);
+                    finish();
                 }
                 break;
             case R.id.level_four:
@@ -275,6 +278,7 @@ public class MainActivity extends AppCompatActivity
                 } else {
                     i.putExtra("levelSelected", levelSelected);
                     startActivity(i);
+                    finish();
                 }
                 break;
             case R.id.level_five:
@@ -286,8 +290,11 @@ public class MainActivity extends AppCompatActivity
                 } else {
                     i.putExtra("levelSelected", levelSelected);
                     startActivity(i);
+                    finish();
                 }
                 break;
         }
     }
+
+
 }

@@ -55,4 +55,10 @@ public class LevelCompleted extends AppCompatActivity {
             }
         });
     }
+
+    public void onBackPressed() {
+        this.startActivity(new Intent(LevelCompleted.this, MainActivity.class));
+        finish();
+        return;
+    }
 }
