@@ -13,6 +13,7 @@
     <color name="grey">#888</color>
     <color name="darkRed">#A31E32</color>
     <color name="darkYellow">#E6B63B</color>
+    <color name="darkYellowTrans">#50E6B63B</color>
     <color name="orange">#FE965B</color>
     <color name="black">#000</color>
 </resources>

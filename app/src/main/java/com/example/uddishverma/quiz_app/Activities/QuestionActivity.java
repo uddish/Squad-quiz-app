@@ -34,8 +34,8 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
     private static final String TAG = "QuestionActivity";
     TextView ans1Tv, ans2Tv, ans3Tv, ans4Tv;
-    TextView questionTv;
-    ArrayList<String> totalQuestions, correctQuestions, wrongQuestions;
+    TextView questionTv, reviewTv;
+    ArrayList<String> totalQuestions, correctQuestions;
     HashMap<String, Integer> reviewQuestionsMap;
     Intent i;
     JSONObject levelWiseQuestions;
@@ -168,6 +168,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         ans3Tv = findViewById(R.id.answer3_tv);
         ans4Tv = findViewById(R.id.answer4_tv);
         questionTv = findViewById(R.id.question_tv);
+        reviewTv = findViewById(R.id.review_tv);
 
         ans1Tv.setOnClickListener(this);
         ans2Tv.setOnClickListener(this);
@@ -225,7 +226,6 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
         Log.d(TAG, "changeQuestion: Total Questions " + totalQuestions);
 
-        //TODO check if the question is repeated or not
         //Shuffle arraylist and show a random question;
         String previousIndex = null;
 
@@ -245,50 +245,62 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
             randomIndex = Integer.parseInt(totalQuestions.get(0));
         }
 
-        if (totalQuestions.size() == 0) {
-            Intent i = new Intent(QuestionActivity.this, LevelCompleted.class);
-            i.putExtra("source", source);
-            if(source.equals("one"))    {
-                Globals.isLevelOneCompleted = 2001;
-                Preferences.setPrefs("isLevelOneCompleted", String.valueOf(Globals.isLevelOneCompleted), QuestionActivity.this);
-            }
-            else if(source.equals("two"))    {
-                Globals.isLevelTwoCompleted = 2002;
-                Preferences.setPrefs("isLevelTwoCompleted", String.valueOf(Globals.isLevelTwoCompleted), QuestionActivity.this);
-            }
-            else if(source.equals("three"))    {
-                Globals.isLevelThreeCompleted = 2003;
-                Preferences.setPrefs("isLevelThreeCompleted", String.valueOf(Globals.isLevelThreeCompleted), QuestionActivity.this);
-            }
-            else if(source.equals("four"))    {
-                Globals.isLevelTwoCompleted = 2004;
-                Preferences.setPrefs("isLevelFourCompleted", String.valueOf(Globals.isLevelFourCompleted), QuestionActivity.this);
-            }
-            else if(source.equals("five"))    {
-                Globals.isLevelTwoCompleted = 2005;
-                Preferences.setPrefs("isLevelFiveCompleted", String.valueOf(Globals.isLevelFiveCompleted), QuestionActivity.this);
-            }
-
-            startActivity(i);
-            finish();
-        }
-
-        //Adding current questions in shared preferences
-
-        Gson gson = new Gson();
-        String remainingQuestions = gson.toJson(totalQuestions);
-        if (source.equals("one")) {
-            Preferences.setPrefs("levelOneList", remainingQuestions, getApplicationContext());
-        } else if (source.equals("two")) {
-            Preferences.setPrefs("levelTwoList", remainingQuestions, getApplicationContext());
-        } else if (source.equals("three")) {
-            Preferences.setPrefs("levelThreeList", remainingQuestions, getApplicationContext());
-        } else if (source.equals("four")) {
-            Preferences.setPrefs("levelFourList", remainingQuestions, getApplicationContext());
-        } else {
-            Preferences.setPrefs("levelFiveList", remainingQuestions, getApplicationContext());
-        }
+        //Setting if the question is reviewed or learned
         try {
+//            if (reviewQuestionsMap.get(totalQuestions.get(0)) == 3) {
+//                reviewTv.setText("Learning");
+//            } else {
+//                reviewTv.setText("Revising");
+//            }
+            if (totalQuestions.size() == 0) {
+                Intent i = new Intent(QuestionActivity.this, LevelCompleted.class);
+                i.putExtra("source", source);
+                if (source.equals("one")) {
+                    Globals.isLevelOneCompleted = 2001;
+                    Preferences.setPrefs("isLevelOneCompleted", String.valueOf(Globals.isLevelOneCompleted), QuestionActivity.this);
+                } else if (source.equals("two")) {
+                    Globals.isLevelTwoCompleted = 2002;
+                    Preferences.setPrefs("isLevelTwoCompleted", String.valueOf(Globals.isLevelTwoCompleted), QuestionActivity.this);
+                } else if (source.equals("three")) {
+                    Globals.isLevelThreeCompleted = 2003;
+                    Preferences.setPrefs("isLevelThreeCompleted", String.valueOf(Globals.isLevelThreeCompleted), QuestionActivity.this);
+                } else if (source.equals("four")) {
+                    Globals.isLevelTwoCompleted = 2004;
+                    Preferences.setPrefs("isLevelFourCompleted", String.valueOf(Globals.isLevelFourCompleted), QuestionActivity.this);
+                } else if (source.equals("five")) {
+                    Globals.isLevelTwoCompleted = 2005;
+                    Preferences.setPrefs("isLevelFiveCompleted", String.valueOf(Globals.isLevelFiveCompleted), QuestionActivity.this);
+                }
+
+                startActivity(i);
+                finish();
+            }
+
+            //Adding current questions in shared preferences with their size
+            Gson gson = new Gson();
+            String remainingQuestions = gson.toJson(totalQuestions);
+            if (source.equals("one")) {
+                Preferences.setPrefs("levelOneList", remainingQuestions, getApplicationContext());
+                //Saving the size of the arraylist
+                Preferences.setPrefs("sizeListLevelOne", String.valueOf(totalQuestions.size()), QuestionActivity.this);
+            } else if (source.equals("two")) {
+                Preferences.setPrefs("levelTwoList", remainingQuestions, getApplicationContext());
+                //Saving the size of the arraylist
+                Preferences.setPrefs("sizeListLevelTwo", String.valueOf(totalQuestions.size()), QuestionActivity.this);
+            } else if (source.equals("three")) {
+                Preferences.setPrefs("sizeListLevelThree", String.valueOf(totalQuestions.size()), QuestionActivity.this);
+                //Saving the size of the arraylist
+                Preferences.setPrefs("levelThreeList", remainingQuestions, getApplicationContext());
+            } else if (source.equals("four")) {
+                Preferences.setPrefs("levelFourList", remainingQuestions, getApplicationContext());
+                //Saving the size of the arraylist
+                Preferences.setPrefs("sizeListLevelFour", String.valueOf(totalQuestions.size()), QuestionActivity.this);
+            } else {
+                Preferences.setPrefs("levelFiveList", remainingQuestions, getApplicationContext());
+                //Saving the size of the arraylist
+                Preferences.setPrefs("sizeListLevelFive", String.valueOf(totalQuestions.size()), QuestionActivity.this);
+            }
+
             //getting the correct indexed question
             questionsObject = levelWiseQuestions.getJSONArray("results").getJSONObject(randomIndex);
             questionTv.setText(questionsObject.getString("question"));
@@ -305,7 +317,6 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     private void checkForCorrectAnswer() {
         try {
 
-//            String questionId = String.valueOf(Integer.parseInt(questionsObject.getString("id")) - 1);
             String questionId = String.valueOf(questionsObject.getString("id"));
 
             if (selectedAnswer.equals(questionsObject.getString("correct_answer"))) {
@@ -320,16 +331,14 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                         totalQuestions.remove(0);
                     }
                 } else {
+                    reviewTv.setText("");
                     totalQuestions.remove(0);
                 }
-
 
                 Toast.makeText(this, "Correct Answer", Toast.LENGTH_SHORT).show();
 
                 //Adding the id of the correct questions;
                 correctQuestions.add(questionId);
-
-                //removing the correct answer from the arraylist
 
                 changeQuestion();
 
@@ -354,7 +363,6 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
             }
 
-//            Log.d(TAG, "checkForCorrectAnswer: " + questionId + "--->" + reviewQuestionsMap.get(questionId));
 
         } catch (JSONException e) {
             e.printStackTrace();
