@@ -349,7 +349,7 @@ public class LevelWiseQuestions {
             "\"Biology Synthetics Technologies\",\n" +
             "\"International Genetic Technologies\",\n" +
             "\"Masrani Global Corporation\",\n" +
-            "\"International Genetic Technologies\"\n" +
+            "\"International Global Technologies\"\n" +
             "]\n" +
             "}\n" +
             "]\n" +

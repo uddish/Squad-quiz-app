@@ -27,6 +27,7 @@
         <activity
             android:name=".Activities.LevelCompleted"
             android:screenOrientation="portrait" />
+        <activity android:name=".Activities.OpenSource"></activity>
     </application>
 
 </manifest>

@@ -39,23 +39,50 @@ public class LevelCompleted extends AppCompatActivity {
 
                 if (source.equals("one")) {
                     i.putExtra("levelSelected", "two");
-                    startActivity(i);
+                    Preferences.setPrefs("isLevelOneReset", String.valueOf(7001), LevelCompleted.this);
+                    if (!Preferences.getPrefs("levelTwoList", LevelCompleted.this).equals("notfound")) {
+                        startActivity(new Intent(LevelCompleted.this, MainActivity.class));
+                    } else {
+                        startActivity(i);
+                    }
                     finish();
                 }
                 if (source.equals("two")) {
                     i.putExtra("levelSelected", "three");
-                    startActivity(i);
+                    Preferences.setPrefs("isLevelTwoReset", String.valueOf(7002), LevelCompleted.this);
+                    if (!Preferences.getPrefs("levelThreeList", LevelCompleted.this).equals("notfound")) {
+                        startActivity(new Intent(LevelCompleted.this, MainActivity.class));
+                    } else {
+                        startActivity(i);
+                    }
                     finish();
                 }
                 if (source.equals("three")) {
                     i.putExtra("levelSelected", "four");
-                    startActivity(i);
+                    Globals.isLevelThreeReset = 7003;
+                    Preferences.setPrefs("isLevelThreeReset", String.valueOf(7003), LevelCompleted.this);
+                    if (!Preferences.getPrefs("levelFourList", LevelCompleted.this).equals("notfound")) {
+                        startActivity(new Intent(LevelCompleted.this, MainActivity.class));
+                    } else {
+                        startActivity(i);
+                    }
                     finish();
                 }
                 if (source.equals("four")) {
                     i.putExtra("levelSelected", "five");
-                    startActivity(i);
+                    Globals.isLevelFourReset = 7004;
+                    Preferences.setPrefs("isLevelFourReset", String.valueOf(7004), LevelCompleted.this);
+                    if (!Preferences.getPrefs("levelFiveList", LevelCompleted.this).equals("notfound")) {
+                        startActivity(new Intent(LevelCompleted.this, MainActivity.class));
+                    } else {
+                        startActivity(i);
+                    }
                     finish();
+                }
+                if (source.equals("five")) {
+                    Globals.isLevelFiveReset = 7005;
+                    Preferences.setPrefs("isLevelFiveReset", String.valueOf(7005), LevelCompleted.this);
+                    startActivity(new Intent(LevelCompleted.this, MainActivity.class));
                 }
             }
         });

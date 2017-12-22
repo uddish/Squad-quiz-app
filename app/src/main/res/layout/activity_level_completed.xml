@@ -45,6 +45,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
+                    android:textColor="@color/darkYellow"
+                    android:padding="10dp"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    android:background="@drawable/yellow_box"
                     android:text="Go to Next Level" />
 
             </LinearLayout>

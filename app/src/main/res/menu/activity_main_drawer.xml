@@ -5,13 +5,9 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_account"
+            android:id="@+id/nav_opensource"
             android:icon="@drawable/ic_menu_camera"
-            android:title="My Account" />
-        <item
-            android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Settings" />
+            android:title="OpenSource Libraries" />
     </group>
 
 

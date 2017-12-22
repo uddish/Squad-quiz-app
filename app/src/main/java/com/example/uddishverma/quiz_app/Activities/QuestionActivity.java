@@ -43,7 +43,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     ArrayList<String> wrongAnswersLevelOne, wrongAnswersLevelTwo, wrongAnswersLevelThree, wrongAnswersLevelFour, wrongAnswersLevelFive;
     static int randomIndex = 0;
     String remainingQuestionString, correctQuestionString;
-    int totalQuestionIndex = 0, correctQuestionIndex = 1;
+    int correctQuestionIndex = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +54,6 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         totalQuestions = new ArrayList<>();
         correctQuestions = new ArrayList<>();
         reviewQuestionsMap = loadHashMap(i.getStringExtra("levelSelected"));
-//        if (!Preferences.getPrefs("isMasteredQuestionsAdded", QuestionActivity.this).equals("notfound")) {
-//            Globals.isMasteredQuestionsAdded = Integer.parseInt(Preferences.getPrefs("isMasteredQuestionsAdded", QuestionActivity.this));
-//        }
 
         try {
 
@@ -277,10 +274,10 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                     Globals.isLevelThreeCompleted = 2003;
                     Preferences.setPrefs("isLevelThreeCompleted", String.valueOf(Globals.isLevelThreeCompleted), QuestionActivity.this);
                 } else if (source.equals("four")) {
-                    Globals.isLevelTwoCompleted = 2004;
+                    Globals.isLevelFourCompleted = 2004;
                     Preferences.setPrefs("isLevelFourCompleted", String.valueOf(Globals.isLevelFourCompleted), QuestionActivity.this);
                 } else if (source.equals("five")) {
-                    Globals.isLevelTwoCompleted = 2005;
+                    Globals.isLevelFiveCompleted = 2005;
                     Preferences.setPrefs("isLevelFiveCompleted", String.valueOf(Globals.isLevelFiveCompleted), QuestionActivity.this);
                 }
 
@@ -402,9 +399,6 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                     } else {
                         if (reviewQuestionsMap.get(questionId) != 0) {
                             reviewQuestionsMap.put(questionId, reviewQuestionsMap.get(questionId) - 1);
-//                            if (Globals.isMasteredQuestionsAdded == 9002) {
-//                                totalQuestions.remove(0);
-//                            }
                         }
                         if (reviewQuestionsMap.get(questionId) == 0) {
                             if (totalQuestions.size() > 0) {
@@ -420,11 +414,21 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                     //Adding the id of the correct questions;
                 }
 
-                Toast.makeText(this, "Correct Answer", Toast.LENGTH_SHORT).show();
+                //Showing success message
+                new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
+                        .setTitleText("Good job!")
+                        .setContentText("Correct Answer!")
+                        .setConfirmText("Next")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                sweetAlertDialog.dismissWithAnimation();
+                                changeQuestion();
+                            }
+                        })
+                        .show();
 
                 Log.d(TAG, "checkForCorrectAnswer: CORRECT QUESTIONS " + correctQuestions);
-
-                changeQuestion();
 
                 Log.d(TAG, " Value ---> " + reviewQuestionsMap.get(questionId) + ", Key -----> " + questionId);
 
