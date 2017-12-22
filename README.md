@@ -9,6 +9,10 @@
 
 ## Screenshots
 
-![alt text](ss/main.png "Home Page")                      ![alt text](ss/locked.png "Level Locked")  
-![alt text](ss/question.png "Question")         ![alt text](ss/correct.png "Correct")   ![alt text](ss/wrong.png "Wrong")  
+![alt text](ss/main.png "Home Page") 
+The application is divided into 5 levels
+![alt text](ss/locked.png "Level Locked")  
+Levels can not be skipped
+![alt text](ss/question.png "Question")         
+![alt text](ss/correct.png "Correct")   ![alt text](ss/wrong.png "Wrong")  
 
