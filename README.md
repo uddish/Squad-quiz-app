@@ -10,11 +10,7 @@
 ## Screenshots
 
 <img align="left" src="ss/main.png">
-<br>
 <img align="left" src="ss/locked.png">
-<br>
 <img align="left" src="ss/questions.png"> 
-
-<img align="center" src="ss/correct.png">          
-<img align="right" src="ss/wrong.png">      
-<br>
+<img align="left" src="ss/correct.png">          
+<img align="left" src="ss/wrong.png">      
