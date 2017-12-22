@@ -18,15 +18,11 @@ import com.google.gson.reflect.TypeToken;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -47,6 +43,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     ArrayList<String> wrongAnswersLevelOne, wrongAnswersLevelTwo, wrongAnswersLevelThree, wrongAnswersLevelFour, wrongAnswersLevelFive;
     static int randomIndex = 0;
     String remainingQuestionString, correctQuestionString;
+    int totalQuestionIndex = 0, correctQuestionIndex = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +54,9 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         totalQuestions = new ArrayList<>();
         correctQuestions = new ArrayList<>();
         reviewQuestionsMap = loadHashMap(i.getStringExtra("levelSelected"));
+//        if (!Preferences.getPrefs("isMasteredQuestionsAdded", QuestionActivity.this).equals("notfound")) {
+//            Globals.isMasteredQuestionsAdded = Integer.parseInt(Preferences.getPrefs("isMasteredQuestionsAdded", QuestionActivity.this));
+//        }
 
         try {
 
@@ -238,11 +238,9 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
         Log.d(TAG, "changeQuestion: Total Questions " + totalQuestions);
 
-        //Shuffle arraylist and show a random question;
         String previousIndex = null;
 
         try {
-
             if (totalQuestions.size() > 0) {
                 previousIndex = totalQuestions.get(0);
                 Collections.shuffle(totalQuestions);
@@ -250,27 +248,18 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
             //Check for same questions if repeating
             if (totalQuestions.size() != 1 && totalQuestions.size() > 0) {
+                Globals.isMasteredQuestionsAdded = 9001;
+                //Shuffle arraylist and show a random question;
                 while (totalQuestions.get(0).equals(previousIndex)) {
                     Log.d(TAG, "changeQuestion: Repeating questions");
                     Collections.shuffle(totalQuestions);
                 }
+
                 randomIndex = Integer.parseInt(totalQuestions.get(0));
+
             } else if (totalQuestions.size() == 1) {
                 randomIndex = Integer.parseInt(totalQuestions.get(0));
-
-                //Add extra questions if the last question is wrong
-                if (reviewQuestionsMap.containsKey(questionsObject.getString("id")) && reviewQuestionsMap.get(questionsObject.getString("id")) > 0) {
-                    Collections.shuffle(correctQuestions);
-                    totalQuestions.add(correctQuestions.get(0));
-                    totalQuestions.add(correctQuestions.get(1));
-
-                    //Putting mastered questions in the map with value -1
-                    reviewQuestionsMap.put(correctQuestions.get(0), -1);
-                    reviewQuestionsMap.put(correctQuestions.get(1), -1);
-
-                    correctQuestions.remove(0);
-                    correctQuestions.remove(1);
-                }
+                Globals.isMasteredQuestionsAdded = 9002;
 
             }
 
@@ -349,12 +338,28 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
             }
 
             //getting the correct indexed question
-            questionsObject = levelWiseQuestions.getJSONArray("results").getJSONObject(randomIndex);
-            questionTv.setText(questionsObject.getString("question"));
-            ans1Tv.setText(questionsObject.getJSONArray("incorrect_answers").getString(0));
-            ans2Tv.setText(questionsObject.getJSONArray("incorrect_answers").getString(1));
-            ans3Tv.setText(questionsObject.getJSONArray("incorrect_answers").getString(2));
-            ans4Tv.setText(questionsObject.getJSONArray("incorrect_answers").getString(3));
+            //Only single question is left in the total questions array
+            if (Globals.isMasteredQuestionsAdded == 9002 && correctQuestionIndex % 2 == 0) {
+                randomIndex = Integer.parseInt(correctQuestions.get(0));
+                reviewQuestionsMap.put(String.valueOf(randomIndex), -1);
+                String temp = correctQuestions.remove(0);
+                correctQuestions.add(temp);
+                correctQuestionIndex++;
+
+            } else {
+                if (totalQuestions.size() > 0) {
+                    randomIndex = Integer.parseInt(totalQuestions.get(0));
+                    correctQuestionIndex++;
+                }
+            }
+            if (totalQuestions.size() != 0) {
+                questionsObject = levelWiseQuestions.getJSONArray("results").getJSONObject(randomIndex);
+                questionTv.setText(questionsObject.getString("question"));
+                ans1Tv.setText(questionsObject.getJSONArray("incorrect_answers").getString(0));
+                ans2Tv.setText(questionsObject.getJSONArray("incorrect_answers").getString(1));
+                ans3Tv.setText(questionsObject.getJSONArray("incorrect_answers").getString(2));
+                ans4Tv.setText(questionsObject.getJSONArray("incorrect_answers").getString(3));
+            }
 
             //Checking the status of wrong question (Review/Learning)
             if (reviewQuestionsMap.containsKey(questionsObject.getString("id"))) {
@@ -393,25 +398,31 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                 if (reviewQuestionsMap.containsKey(questionId)) {
                     //If mastered questions comes in the quiz
                     if (reviewQuestionsMap.get(questionId) == -1) {
-                        totalQuestions.remove(0);
                         reviewQuestionsMap.remove(questionId);
                     } else {
-                        reviewQuestionsMap.put(questionId, reviewQuestionsMap.get(questionId) - 1);
+                        if (reviewQuestionsMap.get(questionId) != 0) {
+                            reviewQuestionsMap.put(questionId, reviewQuestionsMap.get(questionId) - 1);
+//                            if (Globals.isMasteredQuestionsAdded == 9002) {
+//                                totalQuestions.remove(0);
+//                            }
+                        }
                         if (reviewQuestionsMap.get(questionId) == 0) {
-                            totalQuestions.remove(0);
+                            if (totalQuestions.size() > 0) {
+                                totalQuestions.remove(0);
+                            }
+                            correctQuestions.add(questionId);
                         }
                     }
 
                 } else {
                     totalQuestions.remove(0);
+                    correctQuestions.add(questionId);
+                    //Adding the id of the correct questions;
                 }
 
                 Toast.makeText(this, "Correct Answer", Toast.LENGTH_SHORT).show();
 
-                //Adding the id of the correct questions;
-                correctQuestions.add(questionId);
-
-                Log.d(TAG, "checkForCorrectAnswer: Correct Questions Array " + correctQuestions);
+                Log.d(TAG, "checkForCorrectAnswer: CORRECT QUESTIONS " + correctQuestions);
 
                 changeQuestion();
 

@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.uddishverma.quiz_app.R;
+import com.example.uddishverma.quiz_app.Utils.Globals;
+import com.example.uddishverma.quiz_app.Utils.Preferences;
 
 import java.util.logging.Level;
 
@@ -22,6 +24,9 @@ public class LevelCompleted extends AppCompatActivity {
         setContentView(R.layout.activity_level_completed);
 
         i = getIntent();
+
+        Globals.isMasteredQuestionsAdded = 9001;
+        Preferences.setPrefs("isMasteredQuestionsAdded", String.valueOf(Globals.isMasteredQuestionsAdded), LevelCompleted.this);
 
         nextLevel = findViewById(R.id.next_level_button);
 

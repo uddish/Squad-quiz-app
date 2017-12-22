@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class Globals {
 
-    public static int remainingQuestionsLevelOne = 0;
+    public static int isMasteredQuestionsAdded = 9001;
     public static int isLevelOneCompleted = 1001;
     public static int isLevelTwoCompleted = 1002;
     public static int isLevelThreeCompleted = 1003;
