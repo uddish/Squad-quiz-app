@@ -10,11 +10,14 @@
 ## Screenshots
 
 <img align="left" src="ss/main.png">
-<p align="left" The application is divided into 5 levels/>
-
-
-![alt text](ss/locked.png "Level Locked")  
+<br>
+The application is divided into 5 levels
+<br>
+<img align="left" src="ss/locked.png">
+<br>
 Levels can not be skipped
-![alt text](ss/question.png "Question")         
-![alt text](ss/correct.png "Correct")   ![alt text](ss/wrong.png "Wrong")  
-
+<br>
+<img align="left" src="ss/questions.png">  
+<img align="center" src="ss/correct.png">          
+<img align="right" src="ss/wrong.png">      
+<br>
