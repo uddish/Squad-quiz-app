@@ -8,12 +8,11 @@
 5. Mastered questions are also shown for better learning.
 
 ## Screenshots
-<img align="left"  src="ss/main.png">
 
-This is the code you need to align images to the left:
+<img align="left" src="ss/main.png">
+<p align="left" The application is divided into 5 levels/>
 
-![alt text](ss/main.png "Home Page") 
-The application is divided into 5 levels
+
 ![alt text](ss/locked.png "Level Locked")  
 Levels can not be skipped
 ![alt text](ss/question.png "Question")         
