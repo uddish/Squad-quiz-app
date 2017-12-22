@@ -7,6 +7,13 @@
 4. Every completed level can be reset and played again.
 5. Mastered questions are also shown for better learning.
 
+
+## Open Source Libraries Used
+
+com.github.f0ris.sweetalert:library:1.5.2
+com.google.code.gson:gson:2.8.0
+
+
 ## Screenshots
 
 <img align="left" src="ss/main.png">
@@ -17,8 +24,3 @@
 <img align="left" src="ss/learning.png"> 
 <img align="left" src="ss/revising.png">          
 <img align="left" src="ss/checking.png"> 
-
-## Open Source Libraries Used
-
-com.github.f0ris.sweetalert:library:1.5.2
-com.google.code.gson:gson:2.8.0
