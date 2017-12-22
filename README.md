@@ -11,13 +11,10 @@
 
 <img align="left" src="ss/main.png">
 <br>
-The application is divided into 5 levels
-<br>
 <img align="left" src="ss/locked.png">
 <br>
-Levels can not be skipped
-<br>
-<img align="left" src="ss/questions.png">  
+<img align="left" src="ss/questions.png"> 
+
 <img align="center" src="ss/correct.png">          
 <img align="right" src="ss/wrong.png">      
 <br>
