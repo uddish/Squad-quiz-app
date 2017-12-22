@@ -14,3 +14,11 @@
 <img align="left" src="ss/questions.png"> 
 <img align="left" src="ss/correct.png">          
 <img align="left" src="ss/wrong.png">      
+<img align="left" src="ss/learning.png"> 
+<img align="left" src="ss/revising.png">          
+<img align="left" src="ss/checking.png"> 
+
+## Open Source Libraries Used
+
+com.github.f0ris.sweetalert:library:1.5.2
+com.google.code.gson:gson:2.8.0
