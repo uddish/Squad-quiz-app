@@ -9,4 +9,6 @@
 
 ## Screenshots
 
-![alt text](ss/main.png "Home Page 1")                      ![alt text](ss/locked.png "Level Locked")  
+![alt text](ss/main.png "Home Page")                      ![alt text](ss/locked.png "Level Locked")  
+![alt text](ss/question.png "Question")         ![alt text](ss/correct.png "Correct")   ![alt text](ss/wrong.png "Wrong")  
+
