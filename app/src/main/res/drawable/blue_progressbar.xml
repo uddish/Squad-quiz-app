@@ -4,12 +4,11 @@
     <item android:id="@android:id/background">
         <shape>
             <gradient
-                android:startColor="@color/darkBlue"
+                android:angle="270"
                 android:centerColor="@color/darkBlue"
                 android:centerY="1.0"
                 android:endColor="@color/darkBlue"
-                android:angle="270"
-                />
+                android:startColor="@color/darkBlue" />
         </shape>
     </item>
 
@@ -18,12 +17,11 @@
         <clip>
             <shape>
                 <gradient
-                    android:startColor="@color/toryBlue"
+                    android:angle="270"
                     android:centerColor="@color/toryBlue"
                     android:centerY="1.0"
                     android:endColor="@color/toryBlue"
-                    android:angle="270"
-                    />
+                    android:startColor="@color/toryBlue" />
             </shape>
         </clip>
     </item>

@@ -5,4 +5,16 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <string name="title_activity_bonus_guidelines">Bonus</string>
+    <string name="bonus_guidelines_title_1">Introducing Bonus</string>
+    <string name="bonus_guidelines_description_1">Play certain missions within a given time and get rewarded with an extra bonus amount.</string>
+    <string name="bonus_guidelines_title_2">Choose &amp; Enroll</string>
+    <string name="bonus_guidelines_description_2">Select a bonus scheme &amp; enroll in it. Each scheme will have its own target.</string>
+    <string name="bonus_guidelines_title_3">Play during the time slot</string>
+    <string name="bonus_guidelines_description_3">Some missions are available in a particular time slot. Make sure to complete the target.</string>
+    <string name="bonus_guidelines_title_4">"Stay on top of leaderboard</string>
+    <string name="bonus_guidelines_description_4">Track your Progress and stay on top of the leaderboard.</string>
+    <string name="got_it">GOT IT</string>
+
 </resources>

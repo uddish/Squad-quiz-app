@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,131 +9,123 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="6dp"
-        android:layout_weight="1">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/darkblue_box">
-
-            <TextView
-                android:id="@+id/review_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_margin="6dp"
-                android:padding="4dp"
-                android:text=" " />
-
-            <TextView
-                android:id="@+id/question_tv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:padding="3dp"
-                android:text="The question goes here"
-                android:textAppearance="?android:textAppearanceLarge" />
-
-        </RelativeLayout>
-
-    </android.support.v7.widget.CardView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="5dp"
-        android:layout_weight="0.7"
-        android:background="@color/white">
+        android:layout_height="match_parent"
+        android:layout_margin="6dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@drawable/box_orange">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/review_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="6dp"
+                    android:padding="4dp"
+                    tools:text="Learning" />
+
+                <TextView
+                    android:id="@+id/question_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="The question goes here"
+                    android:textAppearance="?android:textAppearanceLarge" />
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="horizontal">
+                android:layout_weight="0.4"
+                android:background="@color/white"
+                android:orientation="vertical">
 
-                <android.support.v7.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="6dp"
-                    android:layout_weight="1">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:background="@drawable/box_orange_fill">
 
                     <TextView
                         android:id="@+id/answer1_tv"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:background="@drawable/blue_box"
+                        android:layout_weight="1"
                         android:gravity="center"
                         android:padding="3dp"
+                        android:textColor="@color/white"
                         android:text="Answer 1" />
 
-                </android.support.v7.widget.CardView>
-
-                <android.support.v7.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="6dp"
-                    android:layout_weight="1">
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/white" />
 
                     <TextView
                         android:id="@+id/answer2_tv"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:background="@drawable/blue_box"
+                        android:layout_weight="1"
                         android:gravity="center"
                         android:padding="3dp"
+                        android:textColor="@color/white"
                         android:text="Answer 2" />
 
-                </android.support.v7.widget.CardView>
-            </LinearLayout>
+                </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="horizontal">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/white" />
 
-                <android.support.v7.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="6dp"
-                    android:layout_weight="1">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:background="@drawable/box_orange_fill">
 
                     <TextView
                         android:id="@+id/answer3_tv"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:background="@drawable/blue_box"
+                        android:layout_weight="1"
+                        android:textColor="@color/white"
                         android:gravity="center"
                         android:text="Answer 3" />
 
-                </android.support.v7.widget.CardView>
-
-                <android.support.v7.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="6dp"
-                    android:layout_weight="1">
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/white" />
 
                     <TextView
                         android:id="@+id/answer4_tv"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:background="@drawable/blue_box"
+                        android:layout_weight="1"
                         android:gravity="center"
+                        android:textColor="@color/white"
                         android:padding="3dp"
                         android:text="Answer 4" />
-                </android.support.v7.widget.CardView>
+                </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
+
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>
